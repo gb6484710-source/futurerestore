@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.19...3.24 FATAL_ERROR)
 project(futurerestore VERSION 2.0.0 LANGUAGES C CXX)
 add_executable(futurerestore
         main.cpp
+        firmware_cache_indices.c
         futurerestore.cpp)
 target_include_directories(futurerestore PRIVATE
         "${CMAKE_SOURCE_DIR}/external/idevicerestore/src"
