@@ -28,6 +28,25 @@ For support, join the [FutureRestore Support server](https://discord.com/invite/
 
 # Compiling
 See [COMPILING](COMPILING.md)
+## Firmware cache indices: current limitations
+
+`src/firmware_cache_indices.c` provides C-linkage definitions for the globals
+referenced by the `idevicerestore` submodule's cached-firmware restore paths:
+
+* `savage_num` starts at `0`, selecting the first of six Savage cache entries.
+* `yonkers_num` starts at `-1`; the existing Yonkers restore code logs a warning
+  and changes it to `0` before accessing the first of sixteen cache entries.
+
+These definitions resolve linker errors only. Device-specific component
+selection is not implemented, and index `0` may select the wrong firmware.
+A complete fix must map the requested firmware component to the matching cache
+entry and validate the index before accessing the cache.
+
+The macOS arm64 debug build, `--help` startup, and rejection of an incomplete
+restore command have been verified. No device restore or cached-firmware
+selection has been tested. **A successful build does not establish restore
+correctness.** The `--no-restore` option stops late in the restore process and
+must not be treated as a side-effect-free dry run.
 
 
 # Futurerestore Usage
